@@ -80,17 +80,18 @@ class DatPhong {
 }
 
 /**
- * Lớp HoaDon đã được bỏ từ khóa "public".
- * Mọi chức năng vẫn được giữ nguyên.
+ * SỬA 1: Lớp HoaDon đã được đổi tên thành "HoaDonThanhToan" 
+ * để tránh xung đột với file HoaDon.java (lớp abstract)
  */
-class HoaDon {
+class HoaDonThanhToan { // <<< ĐỔI TÊN
     protected String maHoaDon;
     protected String maDatPhong;
     protected double tongTien;
     protected double thue;
     protected double giamGia;
 
-    public HoaDon(String maHoaDon, String maDatPhong, double tongTien, double thue, double giamGia) {
+    // SỬA 2: Đổi tên hàm tạo (constructor)
+    public HoaDonThanhToan(String maHoaDon, String maDatPhong, double tongTien, double thue, double giamGia) { // <<< ĐỔI TÊN
         this.maHoaDon = maHoaDon;
         this.maDatPhong = maDatPhong;
         this.tongTien = tongTien;
