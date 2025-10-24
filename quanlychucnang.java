@@ -10,12 +10,17 @@ enum TienDo {
     HOAN_THANH
 }
 
-class Phong {
+/**
+ * SỬA 1: Lớp Phong đã được đổi tên thành "PhongKhachSan" 
+ * để tránh xung đột với class Phong trong file chucnang.java
+ */
+class PhongKhachSan { // <<< ĐỔI TÊN
     private String maPhong;
     private boolean daDat;
     private double giaPhong;
 
-    public Phong(String maPhong, double giaPhong) {
+    // SỬA 2: Đổi tên hàm tạo
+    public PhongKhachSan(String maPhong, double giaPhong) { // <<< ĐỔI TÊN
         this.maPhong = maPhong;
         this.giaPhong = giaPhong;
         this.daDat = false;
@@ -36,14 +41,19 @@ class Phong {
     }
 }
 
-class DatPhong {
+/**
+ * SỬA 3: Lớp DatPhong đã được đổi tên thành "DatPhongKhachSan" 
+ * để tránh xung đột với class DatPhong trong file chucnang.java
+ */
+class DatPhongKhachSan { // <<< ĐỔI TÊN
     private String maPhong;
     private LocalDate ngayBatDau;
     private LocalDate ngayKetThuc;
     private TienDo tienDo;
     private double tongTien;
 
-    public DatPhong(String maPhong, LocalDate batDau, LocalDate ketThuc, double giaPhong) {
+    // SỬA 4: Đổi tên hàm tạo
+    public DatPhongKhachSan(String maPhong, LocalDate batDau, LocalDate ketThuc, double giaPhong) { // <<< ĐỔI TÊN
         this.maPhong = maPhong;
         this.ngayBatDau = batDau;
         this.ngayKetThuc = ketThuc;
@@ -116,33 +126,39 @@ class DatLich extends ThongTinDichVu {
 }
 
 class QuanLyChucNang {
-    private List<Phong> dsPhong = new ArrayList<>();
-    private List<DatPhong> dsDatPhong = new ArrayList<>();
+    // SỬA 5: Cập nhật kiểu dữ liệu của List
+    private List<PhongKhachSan> dsPhong = new ArrayList<>();
+    private List<DatPhongKhachSan> dsDatPhong = new ArrayList<>();
     private List<DatLich> dsDatLich = new ArrayList<>();
 
-    public void themPhong(Phong p) { dsPhong.add(p); }
+    // SỬA 6: Cập nhật tham số
+    public void themPhong(PhongKhachSan p) { dsPhong.add(p); } 
     public void hienThiPhong() {
         System.out.println("\n+---------------- DANH SACH PHONG ----------------+");
-        for (Phong p : dsPhong) System.out.println(p);
+        // SỬA 7: Cập nhật kiểu
+        for (PhongKhachSan p : dsPhong) System.out.println(p); 
         System.out.println("+------------------------------------------------+");
     }
 
     public boolean kiemTraPhongTrong(String maPhong) {
-        for (Phong p : dsPhong)
+        // SỬA 8: Cập nhật kiểu
+        for (PhongKhachSan p : dsPhong) 
             if (p.getMaPhong().equalsIgnoreCase(maPhong))
                 return !p.isDaDat();
         return false;
     }
 
     public void datPhong(String maPhong, LocalDate batDau, LocalDate ketThuc) {
-        for (Phong p : dsPhong) {
+        // SỬA 9: Cập nhật kiểu
+        for (PhongKhachSan p : dsPhong) { 
             if (p.getMaPhong().equalsIgnoreCase(maPhong)) {
                 if (p.isDaDat()) {
                     System.out.println(">>> Phong da duoc dat!");
                     return;
                 }
                 p.datPhong();
-                dsDatPhong.add(new DatPhong(maPhong, batDau, ketThuc, p.getGiaPhong()));
+                // SỬA 10: Gọi hàm tạo của class đã đổi tên
+                dsDatPhong.add(new DatPhongKhachSan(maPhong, batDau, ketThuc, p.getGiaPhong()));
                 System.out.println(">>> Dat phong thanh cong!");
                 return;
             }
@@ -163,11 +179,13 @@ class QuanLyChucNang {
     }
 
     public void capNhatTienDoPhong(String maPhong, TienDo td) {
-        for (DatPhong dp : dsDatPhong)
+        // SỬA 11: Cập nhật kiểu
+        for (DatPhongKhachSan dp : dsDatPhong) 
             if (dp.getMaPhong().equalsIgnoreCase(maPhong)) {
                 dp.capNhatTienDo(td);
                 if (td == TienDo.HOAN_THANH)
-                    for (Phong p : dsPhong)
+                    // SỬA 12: Cập nhật kiểu
+                    for (PhongKhachSan p : dsPhong) 
                         if (p.getMaPhong().equalsIgnoreCase(maPhong))
                             p.traPhong();
                 System.out.println(">>> Da cap nhat tien do phong " + maPhong);
@@ -178,7 +196,8 @@ class QuanLyChucNang {
 
     public double tinhTongDoanhThu() {
         double tong = 0;
-        for (DatPhong dp : dsDatPhong)
+        // SỬA 13: Cập nhật kiểu
+        for (DatPhongKhachSan dp : dsDatPhong) 
             if (dp.getTienDo() == TienDo.HOAN_THANH)
                 tong += dp.getTongTien();
         for (DatLich dl : dsDatLich)
@@ -192,7 +211,8 @@ class QuanLyChucNang {
         if (dsDatPhong.isEmpty())
             System.out.println("| Chua co don dat phong nao!                    |");
         else
-            for (DatPhong dp : dsDatPhong)
+            // SỬA 14: Cập nhật kiểu
+            for (DatPhongKhachSan dp : dsDatPhong) 
                 System.out.println(dp);
         System.out.println("+------------------------------------------------+");
     }
@@ -204,9 +224,10 @@ public class quanlychucnang {
         Scanner sc = new Scanner(System.in);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        ql.themPhong(new Phong("P101", 500000));
-        ql.themPhong(new Phong("P102", 600000));
-        ql.themPhong(new Phong("P103", 700000));
+        // SỬA 15: Gọi hàm tạo của class đã đổi tên
+        ql.themPhong(new PhongKhachSan("P101", 500000));
+        ql.themPhong(new PhongKhachSan("P102", 600000));
+        ql.themPhong(new PhongKhachSan("P103", 700000));
 
         while (true) {
             System.out.println("\n==============================================");
